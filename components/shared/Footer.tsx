@@ -49,12 +49,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t bg-gray-50 dark:bg-gray-900 dark:border-gray-700">
+    <footer className="border-t">
       <div className="max-w-7xl mx-auto px-4 md:px-0 lg:px-0 py-8 md:py-12">
         {/* Mobile View: Collapsible sections */}
         <div className="lg:hidden">
           {footerLinks.map((section) => (
-            <div key={section.title} className="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <div key={section.title} className="mb-4 border-b border-gray-200">
               <button
                 className="w-full flex justify-between items-center py-3 text-left text-gray-800 dark:text-gray-200 font-semibold"
                 onClick={() => toggleSection(section.title)}
@@ -104,7 +104,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500 dark:text-gray-400">
           © 2024 DigitalMarket. All rights reserved.
         </div>
       </div>

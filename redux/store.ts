@@ -1,6 +1,7 @@
 // store.ts
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducers from "./features/authSlice";
+import cartReducers from "./features/cartSlice";
 import { baseApi } from './api/api';
 
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
@@ -10,13 +11,14 @@ import { persistReducer, persistStore } from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'], // শুধুমাত্র auth slice persist হবে
+  whitelist: ['auth', 'cart'],
 };
 
 // combine reducers
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   auth: authReducers,
+  cart: cartReducers,
 });
 
 // persist wrapper
@@ -30,7 +32,6 @@ export const store = configureStore({
       serializableCheck: false, // redux-persist compatibility
     }).concat(baseApi.middleware),
   devTools: process.env.NODE_ENV !== 'production'
-
 });
 
 if (process.env.NODE_ENV !== 'production') {
@@ -38,7 +39,6 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   console.log("Prod mode");
 }
-
 
 // export persistor
 export const persistor = persistStore(store);
