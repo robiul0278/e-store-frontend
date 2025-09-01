@@ -31,7 +31,7 @@ export default function HeroSection() {
             initial="hidden"
             animate="show"
             variants={container}
-            className="relative overflow-hidden py-10"
+            className="relative overflow-hidden py- lg:py-10"
         >
             {/* Background circles */}
             <div className="absolute -top-20 -left-20 w-[300px] h-[300px] bg-pink-300 rounded-full blur-3xl opacity-30" />
@@ -44,7 +44,7 @@ export default function HeroSection() {
                     <motion.div className="space-y-2 text-center lg:text-left">
                         <motion.div
                             variants={fadeIn}
-                            className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-red-100 text-red-700 text-sm font-medium shadow"
+                            className="inline-flex items-center gap-2 px-2 py-1 rounded-full text-sm font-medium shadow"
                         >
                             <Car className="h-4 w-4" />
                             Premium Toy Cars
@@ -68,16 +68,7 @@ export default function HeroSection() {
                             </motion.p>
                         </motion.div>
 
-                        {/* CTA Button */}
-                        <motion.div variants={ctaAnim} className="pt-4">
-                            <Link
-                                href="#toys"
-                                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-red-500 to-yellow-400 text-white font-medium transition-all hover:scale-105 shadow-md"
-                            >
-                                Browse Cars
-                                <ArrowRight className="h-4 w-4 ml-1" />
-                            </Link>
-                        </motion.div>
+
                         {/* Stats Section */}
                         <motion.div
                             variants={fadeIn}
@@ -98,6 +89,17 @@ export default function HeroSection() {
                                 </motion.div>
                             ))}
                         </motion.div>
+
+                        {/* CTA Button */}
+                        <motion.div variants={ctaAnim} className="pt-4">
+                            <Link
+                                href="/shop"
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-gradient-to-r from-red-500 to-yellow-400 text-white font-medium transition-all hover:scale-105 shadow-md"
+                            >
+                                Browse Cars
+                                <ArrowRight className="h-4 w-4 ml-1" />
+                            </Link>
+                        </motion.div>
                     </motion.div>
 
                     {/* Hero image */}
@@ -109,7 +111,7 @@ export default function HeroSection() {
                             src="https://cdn.pixabay.com/animation/2023/01/24/23/10/23-10-50-478_512.gif"
                             alt="Hot Wheels GIF"
                             priority
-                            animationDelay={0.6}
+                            animationDelay={0.5}
                             className="h-full w-full rounded-xl"
                         />
                     </motion.div>

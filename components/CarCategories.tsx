@@ -23,8 +23,8 @@ export default function CarCategories() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              delay: idx * 0.1,
-              duration: 0.4,
+              delay: idx * 0.01,
+              duration: 0.01,
               ease: "easeOut",
             }}
             whileHover={{ scale: 1.08, boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}

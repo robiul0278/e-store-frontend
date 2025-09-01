@@ -61,6 +61,20 @@ const products = [
     price: 15.49,
     image: 'https://i.ebayimg.com/thumbs/images/g/RnsAAOSw~iBniivU/s-l1200.jpg',
     description: 'Vintage Lincoln Continental replica with fine chrome detailing',
+  },
+  {
+    id: '9',
+    name: 'Lincoln Continental Classic Toy',
+    price: 15.49,
+    image: 'https://i.ebayimg.com/thumbs/images/g/RnsAAOSw~iBniivU/s-l1200.jpg',
+    description: 'Vintage Lincoln Continental replica with fine chrome detailing',
+  },
+  {
+    id: '10',
+    name: 'Lincoln Continental Classic Toy',
+    price: 15.49,
+    image: 'https://i.ebayimg.com/thumbs/images/g/RnsAAOSw~iBniivU/s-l1200.jpg',
+    description: 'Vintage Lincoln Continental replica with fine chrome detailing',
   }
 ];
 
@@ -80,7 +94,7 @@ export default function Home() {
       
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-2 md:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-5">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
