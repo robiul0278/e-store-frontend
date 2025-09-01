@@ -36,7 +36,7 @@ const Navbar = () => {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <header className="w-full border-b sticky top-0 z-50">
+        <header className="w-full border-b sticky top-0 z-50 bg-white dark:bg-slate-900">
             <nav className="max-w-7xl mx-auto px-2 lg:px-0">
                 <div className="flex justify-between items-center h-12">
                     {/* Logo */}
@@ -62,7 +62,7 @@ const Navbar = () => {
                         >
                             <ShoppingCart className="h-5 w-5" />
                             {itemCount > 0 && (
-                                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-4 h-4 text-xs flex items-center justify-center">
                                     {itemCount}
                                 </span>
                             )}
@@ -95,7 +95,17 @@ const Navbar = () => {
                     {/* Mobile Right Side: Dark / Bookmark / Toggle */}
                     <div className="md:hidden flex items-center gap-3">
                         <ThemeToggle />
-                        <ShoppingCart />
+                        <button
+                            className='relative  cursor-pointer'
+                            onClick={() => setIsCartOpen(true)}
+                        >
+                            <ShoppingCart className="h-5 w-5" />
+                            {itemCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-4 h-4 text-xs flex items-center justify-center">
+                                    {itemCount}
+                                </span>
+                            )}
+                        </button>
                         <button onClick={toggleMenu} aria-label="Toggle Menu" className="cursor-pointer">
                             {isOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>

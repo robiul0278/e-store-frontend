@@ -10,7 +10,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 flex items-center justify-center w-7 h-7 cursor-pointer"
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 flex items-center justify-center w-6 h-6 cursor-pointer"
     >
       <AnimatePresence mode="wait">
         {theme === "dark" ? (
@@ -21,7 +21,7 @@ export default function ThemeToggle() {
             exit={{ rotate: 90, opacity: 0, scale: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Sun className="w-5 h-5" />
+            <Sun className="w-4 h-4" />
           </motion.div>
         ) : (
           <motion.div
@@ -31,7 +31,7 @@ export default function ThemeToggle() {
             exit={{ rotate: -90, opacity: 0, scale: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Moon className="w-5 h-5" />
+            <Moon className="w-4 h-4" />
           </motion.div>
         )}
       </AnimatePresence>
