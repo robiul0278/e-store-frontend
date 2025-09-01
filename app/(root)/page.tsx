@@ -70,6 +70,7 @@ export default function Home() {
     <div className="flex flex-col">
       <main className="flex-grow">
         <HeroSection />
+        
         <CarCategories/>
         <div className="max-w-7xl mx-auto pt-4 pb-12 px-4 md:p-0 lg:p-0">
           <div className="flex mb-6">
@@ -79,7 +80,7 @@ export default function Home() {
       
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-2 md:gap-5">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

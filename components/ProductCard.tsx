@@ -30,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-<div className="flex flex-col border rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+<div className="flex flex-col border dark:bg-gray-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
   {/* Product Image */}
   <div className="relative h-48 w-full overflow-hidden group">
     <Image
@@ -43,15 +43,15 @@ export default function ProductCard({ product }: ProductCardProps) {
   </div>
 
   {/* Product Info */}
-  <div className="p-4 flex flex-col flex-grow">
-    <h2 className="text-lg md:text-lg font-semibold mb-2 hover:text-red-600 transition-colors duration-300">
+  <div className="px-2 flex flex-col flex-grow">
+    <h2 className="text-lg md:text-lg font-semibold hover:text-red-600 transition-colors duration-300">
       {product.name}
     </h2>
-    <p className="mt-2 text-lg md:text-xl font-bold text-red-500">${product.price.toFixed(2)}</p>
+    <p className="mt-2 text-lg md:text-xl font-bold">${product.price.toFixed(2)}</p>
   </div>
 
   {/* Add to Cart Button */}
-  <div className="p-4">
+  <div className="p-2">
     <button
       onClick={handleAddToCart}
       className="w-full flex items-center justify-center gap-2 px-4 py-1 border font-semibold rounded-lg hover:scale-105 hover:shadow transition-all duration-300 cursor-pointer"
