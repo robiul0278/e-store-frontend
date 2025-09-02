@@ -2,7 +2,7 @@
 
 import { MobileSidebar, Sidebar } from '@/components/Sidebar';
 import { ROLES } from '@/constants/roles';
-import PrivateRoute from '@/utils/PrivateRoute';
+import { PrivateRoute } from '@/utils/PrivateRoute';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <PrivateRoute role={ROLES.admin || ROLES.superAdmin}>
+    <PrivateRoute role={[ROLES.admin, ROLES.superAdmin]}>
       <div className="min-h-screen flex">
         {/* Desktop Sidebar */}
         <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 z-50 border-r bg-background">

@@ -48,11 +48,11 @@ export default function NavProfile() {
 
             {/* Dropdown Menu */}
             {open && (
-                <div className="absolute right-0 mt-3 w-44 dark:bg-gray-900 border rounded-lg shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-3 w-44 border rounded-lg shadow-lg py-1 z-50">
                     {(user?.role === "admin" || user?.role === "superAdmin") && (
                         <Link
                             href="/dashboard"
-                            className="block px-4 py-1 text-sm text-gray-200 hover:bg-gray-800"
+                            className="block px-4 py-1 text-sm"
                         >
                             Dashboard
                         </Link>
@@ -61,7 +61,7 @@ export default function NavProfile() {
                     {user && (
                         <button
                             onClick={handleLogout}
-                            className="w-full text-left px-4 py-1 text-sm dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                            className="w-full text-left px-4 py-1 text-sm cursor-pointer"
                         >
                             Log out
                         </button>

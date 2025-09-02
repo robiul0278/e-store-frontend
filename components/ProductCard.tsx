@@ -30,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-<div className="flex flex-col border dark:bg-gray-900 rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
+<div className="flex flex-col border bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300">
   {/* Product Image */}
   <div className="relative h-48 w-full overflow-hidden group">
     <Image

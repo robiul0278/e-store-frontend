@@ -56,7 +56,7 @@ export default function CartModal({ isOpen, onClose }: CartSlideProps) {
       >
         <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
           <h1 className="text-lg font-semibold">Shopping Cart</h1>
-          <button onClick={onClose} className="p-1">
+          <button onClick={onClose} className="p-1 cursor-pointer">
             ✕
           </button>
         </div>
@@ -95,7 +95,7 @@ export default function CartModal({ isOpen, onClose }: CartSlideProps) {
                     <div className="flex items-center gap-2 mt-2">
                       <div className="flex items-center rounded-md border border-gray-300 dark:border-gray-600">
                         <button
-                          className="h-8 w-8 rounded-none flex items-center justify-center"
+                          className="h-8 w-8 rounded-none flex items-center justify-center cursor-pointer"
                           onClick={() => handleDecrement(item.id, item.quantity)}
                         >
                           <Minus className="h-3 w-3" />
@@ -109,13 +109,13 @@ export default function CartModal({ isOpen, onClose }: CartSlideProps) {
                           className="h-8 w-14 rounded-none border-0 text-center bg-transparent text-gray-900 dark:text-gray-100"
                         />
                         <button
-                          className="h-8 w-8 rounded-none flex items-center justify-center"
+                          className="h-8 w-8 rounded-none flex items-center justify-center cursor-pointer"
                           onClick={() => handleIncrement(item.id, item.quantity)}
                         >
                           <Plus className="h-3 w-3" />
                         </button>
                       </div>
-                      <button onClick={() => handleRemove(item.id)}>
+                      <button onClick={() => handleRemove(item.id)} className='cursor-pointer'>
                         <Trash2 className="h-4 w-4 text-red-500 dark:text-red-400" />
                       </button>
                     </div>

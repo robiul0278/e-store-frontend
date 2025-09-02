@@ -4,60 +4,61 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { LoaderCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-interface Props {
+interface PrivateRouteProps {
+    role: string | string[];
     children: React.ReactNode;
-    role?: 'admin' | 'user' | 'superAdmin';
 }
 
-const PrivateRoute = ({ children, role }: Props) => {
+export const PrivateRoute = ({ children, role }: PrivateRouteProps) => {
     const router = useRouter();
     const { user } = useSelector((state: RootState) => state.auth);
     const [isChecking, setIsChecking] = useState(true);
     const toastShownRef = useRef(false);
 
     useEffect(() => {
-        const checkAccess = () => {
-            if (!user) {
-                router.replace('/');
-                if (!toastShownRef.current) {
-                    toast.error('প্রথমে লগইন করুন!');
-                    toastShownRef.current = true;
-                }
-                setIsChecking(false);
-                return;
+        if (!user) {
+            router.replace('/');
+            if (!toastShownRef.current) {
+                toast.error('প্রথমে লগইন করুন!');
+                toastShownRef.current = true;
             }
+            return; // exit immediately, don't set isChecking
+        }
 
-            if (role && user.role !== role) {
+        if (role) {
+            const rolesArray = Array.isArray(role) ? role : [role];
+            if (!rolesArray.includes(user.role)) {
                 router.replace('/unauthorized');
-                setIsChecking(false);
-                return;
+                return; // exit immediately
             }
+        }
 
-            setIsChecking(false);
-        };
-
-        checkAccess();
+        // only set isChecking false if user exists and role is allowed
+        setIsChecking(false);
     }, [user, role, router]);
 
+    // Show loader **only while checking**
     if (isChecking) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-muted/20 gap-3">
-                <LoaderCircle className="h-10 w-10 animate-spin text-primary" />
-                <p className="text-muted-foreground text-lg">লোড হচ্ছে, অপেক্ষা করুন...</p>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 gap-6">
+                {/* Spinning loader with bouncing dots */}
+                <div className="flex space-x-2">
+                    <span className="w-4 h-4 bg-yellow-600 rounded-full animate-bounce delay-150"></span>
+                    <span className="w-4 h-4 bg-yellow-600 rounded-full animate-bounce delay-300"></span>
+                    <span className="w-4 h-4 bg-yellow-600 rounded-full animate-bounce delay-450"></span>
+                </div>
+
+                {/* Message */}
+                <p className="text-gray-700 dark:text-gray-300 text-lg font-medium">
+                    Loading, please wait...
+                </p>
             </div>
+
         );
     }
 
-
-    if (!user || (role && user.role !== role)) {
-        // Redirecting, nothing to show here
-        return null;
-    }
-
+    // At this point, user exists and role is allowed
     return <>{children}</>;
 };
-
-export default PrivateRoute;

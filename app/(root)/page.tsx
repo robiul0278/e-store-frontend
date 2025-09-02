@@ -81,7 +81,7 @@ const products = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-gray-50 dark:bg-gray-900">
       <main className="flex-grow">
         <HeroSection />
         
