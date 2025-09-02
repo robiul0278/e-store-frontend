@@ -21,7 +21,7 @@ export default function ThemeToggle() {
             exit={{ rotate: 90, opacity: 0, scale: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Sun className="w-4 h-4" />
+            <Sun className="w-5 h-5" />
           </motion.div>
         ) : (
           <motion.div
@@ -31,7 +31,7 @@ export default function ThemeToggle() {
             exit={{ rotate: -90, opacity: 0, scale: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Moon className="w-4 h-4" />
+            <Moon className="w-5 h-5" />
           </motion.div>
         )}
       </AnimatePresence>

@@ -17,7 +17,7 @@ export default function HeroImage({
   alt, 
   className, 
   priority = false,
-  animationDelay = 0 
+  animationDelay = 0.01 
 }: HeroImageProps) {
 
   return (
@@ -26,8 +26,8 @@ export default function HeroImage({
       animate={{ x: 0, opacity: 1, scale: 1 }}
       transition={{
         x: { type: 'spring', stiffness: 120, damping: 15, delay: animationDelay },
-        opacity: { duration: 0.6, delay: animationDelay },
-        scale: { duration: 0.6, delay: animationDelay },
+        opacity: { duration: 0.06, delay: animationDelay },
+        scale: { duration: 0.06, delay: animationDelay },
       }}
       className={cn("relative overflow-hidden", className)}
     >

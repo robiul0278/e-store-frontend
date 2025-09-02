@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
-    // baseUrl: 'http://localhost:5000/api/v1',
-    baseUrl: 'https://job-circular-server.vercel.app/api/v1',
+    baseUrl: 'http://localhost:5000/api/v1',
+    // baseUrl: 'https://job-circular-server.vercel.app/api/v1',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('accessToken');
 
@@ -23,7 +23,6 @@ export const baseApi = createApi({
           url: "/circulars",
           method: "GET",
           params: params,
-
         }
       },
       providesTags: ['circulars'],
@@ -87,23 +86,23 @@ export const baseApi = createApi({
     }),
     //Auth route
     registerUser: builder.mutation({
-      query: (data) => {
-        // console.log(data);
+      query: (formData) => {
+        console.log(formData);
         return {
           url: `/auth/register`,
           method: "POST",
-          body: data
+          body: formData
         }
       },
       invalidatesTags: ["auth"]
     }),
     loginUser: builder.mutation({
-      query: (data) => {
+      query: (formData) => {
         // console.log(data);
         return {
           url: `/auth/login`,
           method: "POST",
-          body: data
+          body: formData
         }
       },
       invalidatesTags: ["auth"]

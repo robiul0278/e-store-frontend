@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { logout } from "@/redux/features/authSlice";
 import { RootState } from "@/redux/store";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import ThemeToggle from "../ThemeToggle";
 import { useCart } from "@/redux/hooks/useCart";
 import CartModal from "../CartModal";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { useSelector } from "react-redux";
+import NavProfile from "../NavProfile";
 
 const menuItems = [
     { name: "Home", href: "/" },
@@ -20,18 +20,19 @@ const menuItems = [
 ];
 
 const Navbar = () => {
-    const dispatch = useDispatch();
-    const router = useRouter();
+
     const { user } = useSelector((state: RootState) => state.auth);
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { itemCount } = useCart();
+    const { setOpen, setFormType } = useAuthModal();
 
-    const handleLogout = () => {
-        localStorage.removeItem("accessToken");
-        dispatch(logout());
-        router.replace('/');
+    const handleLoginClick = () => {
+        setFormType("login");
+        setOpen(true);
     };
+
+
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -68,23 +69,10 @@ const Navbar = () => {
                             )}
                         </button>
                         {user ? (
-                            <>
-                                {user.role === 'admin' && (
-                                    <Link href="/dashboard">
-                                        <span className="cursor-pointer text-sm px-2 py-1 rounded-md border">
-                                            Dashboard
-                                        </span>
-                                    </Link>
-                                )}
-                                <button
-                                    onClick={handleLogout}
-                                    className="cursor-pointer text-sm px-2 py-1 rounded-md border"
-                                >
-                                    LogOut
-                                </button>
-                            </>
+                            <NavProfile />
                         ) : (
                             <button
+                                onClick={handleLoginClick}
                                 className="cursor-pointer text-sm px-2 py-1 rounded-md border"
                             >
                                 Login/Register
@@ -106,6 +94,7 @@ const Navbar = () => {
                                 </span>
                             )}
                         </button>
+                        {user && <NavProfile />}
                         <button onClick={toggleMenu} aria-label="Toggle Menu" className="cursor-pointer">
                             {isOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
@@ -131,27 +120,9 @@ const Navbar = () => {
                                     </span>
                                 </Link>
                             ))}
-                            {user ? (
-                                <>
-                                    {user.role === 'admin' || user.role === 'superAdmin' && (
-                                        <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                                            <span className="cursor-pointer text-sm px-2 py-1 rounded-md border">
-                                                Dashboard
-                                            </span>
-                                        </Link>
-                                    )}
-                                    <button
-                                        onClick={() => {
-                                            handleLogout();
-                                            setIsOpen(false);
-                                        }}
-                                        className="mt-2 cursor-pointer text-sm px-2 py-1 rounded-md border"
-                                    >
-                                        LogOut
-                                    </button>
-                                </>
-                            ) : (
+                            {!user && (
                                 <button
+                                    onClick={handleLoginClick}
                                     className="cursor-pointer text-sm px-2 py-1 rounded-md border"
                                 >
                                     Login/Register
