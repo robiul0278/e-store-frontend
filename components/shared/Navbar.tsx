@@ -48,7 +48,7 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center justify-center flex-grow gap-6">
                         {menuItems.map((item) => (
-                            <Link key={item.name} href={item.href} className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors duration-200 relative after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all hover:after:w-full">
+                            <Link key={item.name} href={item.href} className="hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors duration-200 relative after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] after:bg-gray-500 after:transition-all hover:after:w-full">
                                 {item.name}
                             </Link>
                         ))}
