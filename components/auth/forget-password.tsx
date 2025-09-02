@@ -57,7 +57,7 @@ export default function ForgetPasswordForm({ switchForm, closeModal }: { switchF
           className={`mt-1 block w-full rounded-md  px-3 py-2 shadow-sm focus:outline-none dark:bg-gray-800 dark:text-white text-sm ${
             errors.email ? "border-red-500" : "border-gray-300"
           }`}
-          {...register("email", { required: "Email is required" })}
+          {...register("email")}
         />
         {errors.email && (
           <p className="mt-1 text-sm text-yellow-600">{errors.email.message}</p>

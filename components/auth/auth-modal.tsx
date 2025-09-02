@@ -40,7 +40,7 @@ export default function AuthModal() {
             ? "Login"
             : formType === "register"
             ? "Create an Account"
-            : "Reset Password"}
+            : "Forget Password!"}
         </h2>
 
         {/* Forms */}
