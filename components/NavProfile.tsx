@@ -36,7 +36,7 @@ export default function NavProfile() {
     return (
         <div className="relative" ref={menuRef}>
             {/* Profile Avatar */}
-            <button onClick={() => setOpen(!open)} className="flex items-center">
+            <button onClick={() => setOpen(!open)} className="flex items-center border-2 rounded-full border-amber-600">
                 <Image
                     src={user?.photo || "/user.png"}
                     alt="Profile"
@@ -48,7 +48,7 @@ export default function NavProfile() {
 
             {/* Dropdown Menu */}
             {open && (
-                <div className="absolute right-0 mt-3 w-44 border rounded-lg shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-3 w-44 border rounded-lg shadow-lg py-1 z-50 bg-white dark:bg-gray-900">
                     {(user?.role === "admin" || user?.role === "superAdmin") && (
                         <Link
                             href="/dashboard"

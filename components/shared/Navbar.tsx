@@ -11,6 +11,7 @@ import CartModal from "../CartModal";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { useSelector } from "react-redux";
 import NavProfile from "../NavProfile";
+import Image from "next/image";
 
 const menuItems = [
     { name: "Home", href: "/" },
@@ -40,11 +41,20 @@ const Navbar = () => {
         <header className="w-full border-b sticky top-0 z-50 bg-white dark:bg-slate-900">
             <nav className="max-w-7xl mx-auto px-2 lg:px-0">
                 <div className="flex justify-between items-center h-12">
-                    {/* Logo */}
-                    <Link href="/">
-                        <span className="text-xl sm:text-2xl font-bold">E-STORE</span>
-                    </Link>
-
+              {/* Logo */}
+<Link href="/" className="flex items-center space-x-2">
+  <div className="relative h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14">
+    <Image
+      src="/logo.png"
+      alt="Toy Shop Logo"
+      fill
+      className="object-contain"
+      sizes="(max-width: 640px) 40px, (max-width: 768px) 48px, 56px"
+      priority
+    />
+  </div>
+  <span className="text-xl sm:text-2xl font-bold">BMV</span>
+</Link>
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center justify-center flex-grow gap-6">
                         {menuItems.map((item) => (

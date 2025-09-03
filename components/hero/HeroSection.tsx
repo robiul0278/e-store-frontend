@@ -82,9 +82,9 @@ export default function HeroSection() {
                                 <motion.div
                                     key={idx}
                                     whileHover={{ scale: 1.05 }}
-                                    className="px-4 py-2 rounded-lg bg-white/70 dark:bg-gray-800/50 shadow-md backdrop-blur-md"
+                                    className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-md backdrop-blur-md"
                                 >
-                                    <p className="text-xl font-bold text-red-600">{stat.value}</p>
+                                    <p className="text-xl font-bold text-amber-600">{stat.value}</p>
                                     <p className="text-sm text-gray-600 dark:text-gray-300">{stat.label}</p>
                                 </motion.div>
                             ))}
@@ -94,7 +94,7 @@ export default function HeroSection() {
                         <motion.div variants={ctaAnim} className="pt-4">
                             <Link
                                 href="/shop"
-                                className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-gradient-to-r from-red-500 to-yellow-400 text-white font-medium transition-all hover:scale-105 shadow-md"
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-lg border text-amber-600 border-amber-600  font-medium transition-all hover:scale-105 shadow-md"
                             >
                                 Browse Cars
                                 <ArrowRight className="h-4 w-4 ml-1" />

@@ -15,28 +15,27 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ["circulars", "auth", "bookmark", "notice"],
+  tagTypes: ["products", "auth", "bookmark", "notice"],
   endpoints: (builder) => ({
-    getAllJobs: builder.query({
+    getAllProducts: builder.query({
       query: (params) => {
         return {
-          url: "/circulars",
+          url: "/products",
           method: "GET",
           params: params,
         }
       },
-      providesTags: ['circulars'],
-      keepUnusedDataFor: 300,
+      providesTags: ['products'],
     }),
-    createJob: builder.mutation({
+    createProduct: builder.mutation({
       query: (data) => {
         return {
-          url: "/circulars/post-circular",
+          url: "/products/create",
           method: "POST",
           body: data,
         }
       },
-      invalidatesTags: ["circulars"]
+      invalidatesTags: ["products"]
     }),
     updateJob: builder.mutation({
       query: (data) => {
@@ -57,14 +56,14 @@ export const baseApi = createApi({
       },
       providesTags: ["circulars"]
     }),
-    deleteJob: builder.mutation({
+    deleteProduct: builder.mutation({
       query: (jobId) => {
         return {
-          url: `/circulars/delete/${jobId}`,
+          url: `/products/delete/${jobId}`,
           method: "DELETE",
         }
       },
-      invalidatesTags: ["circulars"]
+      invalidatesTags: ["products"]
     }),
     updateViews: builder.mutation({
       query: (id) => {
@@ -187,12 +186,12 @@ export const baseApi = createApi({
 
 export const {
   //job route
-  useGetAllJobsQuery,
-  useCreateJobMutation,
+  useGetAllProductsQuery,
+  useCreateProductMutation,
   useUpdateJobMutation,
   useGetSingleJobQuery,
   useUpdateViewsMutation,
-  useDeleteJobMutation,
+  useDeleteProductMutation,
   //auth route
   useLoginUserMutation,
   useRegisterUserMutation,
