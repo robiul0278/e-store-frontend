@@ -37,24 +37,24 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["products"]
     }),
-    updateJob: builder.mutation({
-      query: (data) => {
+    updateProduct: builder.mutation({
+      query: (FormData) => {
         return {
-          url: `/circulars/update/${data._id}`,
+          url: `/products/update`,
           method: "PATCH",
-          body: data,
+          body: FormData,
         }
       },
-      invalidatesTags: ["circulars"]
+      invalidatesTags: ["products"]
     }),
-    getSingleJob: builder.query({
+    getSingleProduct: builder.query({
       query: (slug) => {
         return {
-          url: `/circulars/single/${slug}`,
+          url: `/products/single/${slug}`,
           method: "GET",
         }
       },
-      providesTags: ["circulars"]
+      providesTags: ["products"]
     }),
     deleteProduct: builder.mutation({
       query: (jobId) => {
@@ -188,8 +188,8 @@ export const {
   //job route
   useGetAllProductsQuery,
   useCreateProductMutation,
-  useUpdateJobMutation,
-  useGetSingleJobQuery,
+  useUpdateProductMutation,
+  useGetSingleProductQuery,
   useUpdateViewsMutation,
   useDeleteProductMutation,
   //auth route

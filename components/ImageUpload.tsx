@@ -3,44 +3,33 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+type ImageItem = File | string;
+
 type ImageUploadProps = {
-  value: File[];
-  onChange: (files: File[]) => void;
+  value: ImageItem[];
+  onChange: (files: File[]) => void; // parent will get only new files for upload
 };
 
 export default function ImageUpload({ onChange, value }: ImageUploadProps) {
-  const [files, setFiles] = useState<File[]>([]);
-  const [preview, setPreview] = useState<string[]>([]);
+  const [items, setItems] = useState<ImageItem[]>([]);
 
-  // Sync with parent value
+  // sync with parent
   useEffect(() => {
-    if (value) {
-      setFiles(value);
-      setPreview(value.map((file) => URL.createObjectURL(file)));
-    }
+    setItems(value || []);
   }, [value]);
 
-  // Cleanup object URLs
-  useEffect(() => {
-    return () => {
-      preview.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [preview]);
-
-  // Handle new files
+  // handle new files
   const handleFiles = (newFiles: File[]) => {
-    const allFiles = [...files, ...newFiles];
-    setFiles(allFiles);
-    setPreview(allFiles.map((file) => URL.createObjectURL(file)));
-    onChange(allFiles); // ✅ File[] send
+    const updatedItems = [...items, ...newFiles];
+    setItems(updatedItems);
+    onChange(updatedItems.filter((i): i is File => i instanceof File)); // send only File[]
   };
 
-  // Remove file
-  const removeFile = (index: number) => {
-    const updatedFiles = files.filter((_, i) => i !== index);
-    setFiles(updatedFiles);
-    setPreview(updatedFiles.map((file) => URL.createObjectURL(file)));
-    onChange(updatedFiles); // ✅ File[] send
+  // remove item (File or URL)
+  const removeItem = (index: number) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+    onChange(updatedItems.filter((i): i is File => i instanceof File)); // send only File[]
   };
 
   return (
@@ -58,19 +47,6 @@ export default function ImageUpload({ onChange, value }: ImageUploadProps) {
         }}
         onClick={() => document.getElementById("fileInput")?.click()}
       >
-        <svg
-          className="w-8 h-8 text-gray-400 mb-2"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v6m0-6l-3 3m3-3l3 3m0-6V6m0 0l-3-3m3 3l3-3"
-          />
-        </svg>
         <span className="text-gray-500">Click or drag photos here</span>
       </div>
 
@@ -82,34 +58,32 @@ export default function ImageUpload({ onChange, value }: ImageUploadProps) {
         className="hidden"
         onChange={(e) => {
           if (!e.target.files) return;
-          const selectedFiles = Array.from(e.target.files);
-          handleFiles(selectedFiles);
+          handleFiles(Array.from(e.target.files));
         }}
       />
 
       <div className="grid grid-cols-2 md:grid-cols-6 gap-2 mt-2">
-        {preview.map((src, idx) => (
-          <div
-            key={idx}
-            className="relative w-24 h-24 md:w-28 md:h-28" // fixed width & height
-          >
-            <Image
-              src={src}
-              alt="Preview"
-              fill
-              className="rounded-md object-cover border"
-            />
-            <button
-              type="button"
-              onClick={() => removeFile(idx)}
-              className="absolute -top-1 -right-1 bg-red-500 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center hover:bg-red-600"
-            >
-              ×
-            </button>
-          </div>
-        ))}
+        {items.map((item, idx) => {
+          const src = item instanceof File ? URL.createObjectURL(item) : item;
+          return (
+            <div key={idx} className="relative w-24 h-24 md:w-28 md:h-28">
+              <Image
+                src={src}
+                alt="Preview"
+                fill
+                className="rounded-md object-cover border"
+              />
+              <button
+                type="button"
+                onClick={() => removeItem(idx)}
+                className="absolute -top-1 -right-1 bg-red-500 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+              >
+                ×
+              </button>
+            </div>
+          );
+        })}
       </div>
-
     </div>
   );
 }

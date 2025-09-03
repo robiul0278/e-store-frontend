@@ -108,7 +108,7 @@ export default function ProductForm({ form, onSubmit }: ProductFormProps) {
                 disabled={isSubmitting}
                 className="w-full rounded-md border border-amber-500 px-4 py-2 text-sm dark:text-gray-200 disabled:opacity-70 cursor-pointer"
             >
-                {isSubmitting ? "Creating..." : "Create Product"}
+                {isSubmitting ? "Submitting..." : "Submit Form"}
             </button>
         </form>
     );

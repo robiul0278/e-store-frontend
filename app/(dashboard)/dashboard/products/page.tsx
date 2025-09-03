@@ -52,9 +52,6 @@ export default function AllProductPage() {
     setCurrentPage(1);
   };
 
-  const handleEdit = (id: string) => {
-    router.push(`/dashboard/update-circular/${id}`);
-  };
 
   const handleDelete = (id: string) => {
     Swal.fire({
@@ -150,7 +147,6 @@ export default function AllProductPage() {
         <div className="p-5">
           <ProductTable
             products={tableData}
-            onEdit={handleEdit}
             onDelete={handleDelete}
           />
           {/* Pagination */}
