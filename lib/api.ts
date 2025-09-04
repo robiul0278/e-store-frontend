@@ -24,3 +24,16 @@ export async function getAllProducts({params}: {params?:TParams}) {
   const json = await res.json();
   return json.data;
 }
+export async function getSingleProducts(id:string) {
+  const res = await fetch(`${BASE_URL}/products/single/${id}`, {
+      next: { revalidate: 300},
+  });
+  if (res.status === 404) {
+    return notFound();
+  }
+  if (!res.ok) {
+    throw new Error("দয়া করে আবার চেষ্টা করুন।");
+  }
+  const json = await res.json();
+  return json.data;
+}

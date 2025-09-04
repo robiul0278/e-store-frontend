@@ -70,5 +70,25 @@ export default function CreateProduct() {
     }
   };
 
-  return <ProductForm form={form} onSubmit={onSubmit} />;
+  return (
+    <section>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Create Product</h1>
+          <p className="text-sm mt-1 text-muted-foreground">
+            Add a new product to your store and manage its details easily.
+          </p>
+        </div>
+
+        <div className="text-right">
+          <p className="text-sm text-muted-foreground">Date:</p>
+          <p className="text-sm font-medium text-foreground">
+            {new Date().toLocaleDateString("en-BD")}
+          </p>
+        </div>
+      </div>
+      <ProductForm form={form} onSubmit={onSubmit} />
+    </section>
+  );
 }

@@ -77,5 +77,25 @@ export default function EditProductPage({ params }: PageProps) {
         }
     };
 
-    return <ProductForm form={form} onSubmit={onSubmit} />;
+
+    return (
+        <section>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-5">
+                <div>
+                    <h1 className="text-3xl font-bold text-foreground">Update Product</h1>
+                    <p className="text-sm mt-1 text-muted-foreground">
+                        Modify product details, upload new photos, or adjust pricing and discount.
+                    </p>
+                </div>
+                <div className="text-right">
+                    <p className="text-sm text-muted-foreground">Date:</p>
+                    <p className="text-sm font-medium text-foreground">
+                        {new Date().toLocaleDateString("en-BD")}
+                    </p>
+                </div>
+            </div>
+            <ProductForm form={form} onSubmit={onSubmit} />
+        </section>
+    );
 }

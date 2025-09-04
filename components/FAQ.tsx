@@ -68,7 +68,7 @@ export default function FAQ() {
       {/* Heading */}
       <div className="flex items-center justify-center gap-4 mb-10">
         <hr className="flex-grow border border-t 0" />
-        <h2 className="text-xl md:text-3xl font-bold text-center whitespace-nowrap">
+        <h2 className="text-xl md:text-1xl font-semibold text-center whitespace-nowrap">
           Frequently Asked Questions
         </h2>
         <hr className="flex-grow border border-t " />
@@ -89,7 +89,7 @@ export default function FAQ() {
               <motion.span
                 animate={{ rotate: openIndex === idx ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
-                className="ml-2 text-cyan-500 font-bold text-2xl leading-none"
+                className="ml-2 text-amber-500 font-bold text-2xl leading-none"
               >
                 +
               </motion.span>

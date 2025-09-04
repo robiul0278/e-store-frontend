@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Search, Filter, Loader, } from "lucide-react";
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/api/api";
 import { TGenericErrorResponse } from "@/types/types";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Pagination from "@/components/Pagination";
 import ProductTable from "@/components/dashboard/ProductTable";
@@ -15,7 +14,6 @@ export default function AllProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const router = useRouter();
 
   const params = {
     ...(selectedCategory && { categories: selectedCategory }),

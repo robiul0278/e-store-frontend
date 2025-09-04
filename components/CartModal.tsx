@@ -1,12 +1,14 @@
 'use client';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Trash2, ArrowRight, Plus, Minus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/redux/hooks/useCart';
 import { removeFromCart, updateQuantity } from '@/redux/features/cartSlice';
+import { RootState } from '@/redux/store';
+import { useAuthModal } from '@/context/AuthModalContext';
 
 interface CartSlideProps {
   isOpen: boolean;
@@ -15,7 +17,13 @@ interface CartSlideProps {
 
 export default function CartModal({ isOpen, onClose }: CartSlideProps) {
   const dispatch = useDispatch();
-  const { items, total } = useCart();
+  const { items, subtotal } = useCart();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { setOpen, setFormType } = useAuthModal();
+  const handleLoginClick = () => {
+    setFormType("login");
+    setOpen(true);
+  };
 
   const handleQuantityChange = (id: string, value: string) => {
     const quantity = Math.max(1, Math.min(99, parseInt(value) || 1));
@@ -80,7 +88,7 @@ export default function CartModal({ isOpen, onClose }: CartSlideProps) {
                 >
                   <div className="relative h-20 w-20 rounded-md overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.image}
+                      src={item.photo}
                       alt={item.name}
                       fill
                       className="object-cover"
@@ -132,14 +140,21 @@ export default function CartModal({ isOpen, onClose }: CartSlideProps) {
         {items.length > 0 && (
           <div className="p-4 border-t dark:border-gray-700">
             <div className="flex justify-between font-medium text-gray-900 dark:text-gray-100 mb-4">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>Subtotal</span>
+              <span>${subtotal.toFixed(2)}</span>
             </div>
-            <Link href="/checkout" onClick={onClose}>
-              <button className="w-full flex justify-center items-center gap-2 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
-                Proceed to Checkout <ArrowRight className="h-4 w-4" />
-              </button>
-            </Link>
+            {user ?
+              (<Link href="/checkout" onClick={onClose}>
+                  <button className="w-full flex justify-center items-center gap-2 py-2 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-md cursor-pointer">
+                    Proceed to Checkout <ArrowRight className="h-4 w-4" />
+                  </button>
+                </Link>)
+              :
+              (<button onClick={handleLoginClick} className="w-full flex justify-center items-center gap-2 py-2 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-md cursor-pointer">
+                  Proceed to Checkout <ArrowRight className="h-4 w-4" />
+                </button>
+              )}
+
           </div>
         )}
       </motion.div>

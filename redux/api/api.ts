@@ -48,7 +48,9 @@ export const baseApi = createApi({
       invalidatesTags: ["products"]
     }),
     getSingleProduct: builder.query({
+
       query: (slug) => {
+        console.log(slug);
         return {
           url: `/products/single/${slug}`,
           method: "GET",
@@ -64,24 +66,6 @@ export const baseApi = createApi({
         }
       },
       invalidatesTags: ["products"]
-    }),
-    updateViews: builder.mutation({
-      query: (id) => {
-        return {
-          url: `/circulars/views/${id}`,
-          method: "POST",
-        }
-      },
-      invalidatesTags: ["circulars"]
-    }),
-    analytics: builder.query({
-      query: () => {
-        return {
-          url: `/circulars/analytics`,
-          method: "GET",
-        }
-      },
-      providesTags: ["circulars"]
     }),
     //Auth route
     registerUser: builder.mutation({
@@ -190,7 +174,6 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useGetSingleProductQuery,
-  useUpdateViewsMutation,
   useDeleteProductMutation,
   //auth route
   useLoginUserMutation,
@@ -205,5 +188,4 @@ export const {
   useAddNoticeMutation,
   useAllNoticeQuery,
   //Dashboard analytics
-  useAnalyticsQuery,
 } = baseApi;
