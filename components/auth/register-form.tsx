@@ -23,11 +23,13 @@ export default function RegisterForm({ switchForm }: { switchForm: () => void })
       name: "",
       email: "",
       password: "",
-      photo: "",
+      photo: undefined,
     },
   });
 
   const onSubmit = async (data: RegisterFormType) => {
+
+
     try {
       const formData = new FormData();
       // photo file
@@ -35,6 +37,7 @@ export default function RegisterForm({ switchForm }: { switchForm: () => void })
       if (fileInput?.files?.[0]) {
         formData.append("file", fileInput.files[0]);
       }
+
       // rest of the data
       formData.append("data", JSON.stringify({
         name: data.name,
@@ -47,7 +50,6 @@ export default function RegisterForm({ switchForm }: { switchForm: () => void })
       switchForm();
     } catch (error: unknown) {
       const err = error as { data: TGenericErrorResponse };
-
       if (err?.data?.errorSources && Array.isArray(err.data.errorSources)) {
         err.data.errorSources.forEach(({ path, message }) => {
           setError(path as keyof RegisterFormType, {
@@ -96,7 +98,7 @@ export default function RegisterForm({ switchForm }: { switchForm: () => void })
           accept="image/*"
           className="hidden"
           {...register("photo", {
-              // required: "photo is required!",
+            // required: "photo is required!",
             onChange: (e) => {
               const file = e.target.files?.[0];
               if (file) {

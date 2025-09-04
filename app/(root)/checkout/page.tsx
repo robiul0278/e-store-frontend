@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import ThankYouMessage from './components/ThankYouMessage';
+import ThankYouMessage from '../../../components/ThankYouMessage';
 import { selectCartItems } from '@/redux/features/cartSlice';
-import OrderSummary from './components/OrderSummary';
-import CheckoutForm from './components/CheckoutForm';
+import OrderSummary from '../../../components/OrderSummary';
+import CheckoutForm from '../../../components/CheckoutForm';
 
 export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState(false);

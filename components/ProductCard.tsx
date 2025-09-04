@@ -84,7 +84,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   <span>{product.price}</span>
                 </p>
 
-                <span className="absolute top-1 right-1 px-2 py-1 text-sm bg-red-100  dark:bg-amber-600 rounded-md">
+                <span className="absolute top-1 right-1 px-2 py-1 text-sm bg-amber-400  dark:bg-amber-600 rounded-md">
                   -{product.discount}%
                 </span>
               </>

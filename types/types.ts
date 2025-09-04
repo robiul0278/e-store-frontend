@@ -50,3 +50,12 @@ export type TProduct = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type TUsers = {
+  _id:string;
+    name: string;
+    email: string;
+    password: string;
+    photo: string;
+    role: string;
+}

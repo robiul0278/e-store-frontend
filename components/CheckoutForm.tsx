@@ -90,26 +90,8 @@ export default function CheckoutForm({ onOrderComplete }: CheckoutFormProps) {
         {/* Payment Method */}
         <div>
           <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-200">Payment Method</label>
-          <div className="space-y-3">
-            <label
-              className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer transition-all hover:shadow-md ${
-                paymentMethod === 'card' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 dark:border-gray-600'
-              }`}
-            >
-              <input type="radio" value="card" {...register('paymentMethod')} className="cursor-pointer" />
-              <CreditCard className="w-5 h-5 text-blue-500" />
-              Pay with Card
-            </label>
-
-            <label
-              className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer transition-all hover:shadow-md ${
-                paymentMethod === 'paypal' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 dark:border-gray-600'
-              }`}
-            >
-              <input type="radio" value="paypal" {...register('paymentMethod')} className="cursor-pointer" />
-              <DollarSign className="w-5 h-5 text-blue-600" />
-              Pay with PayPal
-            </label>
+          <div className="">
+     
 
             <label
               className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer transition-all hover:shadow-md ${

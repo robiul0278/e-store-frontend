@@ -115,6 +115,35 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["auth"]
     }),
+    getAllUsers: builder.query({
+      query: (params) => {
+        return {
+          url: "/auth",
+          method: "GET",
+          params: params,
+        }
+      },
+      providesTags: ['auth'],
+    }),
+    deleteUser: builder.mutation({
+      query: (userId) => {
+        return {
+          url: `/auth/delete/${userId}`,
+          method: "DELETE",
+        }
+      },
+      invalidatesTags: ["auth"]
+    }),
+    updateRole: builder.mutation({
+      query: (userData) => {
+        return {
+          url: `/auth/update/${userData.id}`,
+          method: "PATCH",
+          body: userData,
+        }
+      },
+      invalidatesTags: ["auth"]
+    }),
     getBookmark: builder.query({
       query: (userId) => {
         // console.log("API",userId);
@@ -180,6 +209,9 @@ export const {
   useRegisterUserMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,
+  useGetAllUsersQuery,
+  useDeleteUserMutation,
+  useUpdateRoleMutation,
   //bookmark route
   useGetBookmarkQuery,
   useAddBookmarkMutation,

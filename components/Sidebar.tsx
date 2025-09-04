@@ -12,6 +12,7 @@ import {
   Users,
   Home,
   X,
+  ListOrderedIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -30,6 +31,11 @@ const sidebarNavItems = [
     title: 'Create Product',
     href: '/dashboard/create-product',
     icon: FileText,
+  },
+  {
+    title: 'Manage Orders',
+    href: '/dashboard/orders',
+    icon: ListOrderedIcon,
   },
   {
     title: 'Manage Users',
