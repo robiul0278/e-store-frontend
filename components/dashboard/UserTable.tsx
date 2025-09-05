@@ -36,8 +36,8 @@ export default function UserTable({ users, onDelete, onRoleUpdate }: TableProps)
                                 <select
                                     value={user.role}
                                     onChange={(e) => onRoleUpdate(user._id, e.target.value)}
-                                    className={`appearance-none w-52 h-9 pl-9 pr-9 rounded-md border text-foreground focus:outline-none focus:ring-2 focus:ring-ring
-      ${user.role === "user" ? "bg-gray-100 dark:bg-gray-600" : ""}
+                                    className={`appearance-none w-40 h-9 pl-9 pr-9 rounded-md border text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+      ${user.role === "user" ? "bg-gray-100 dark:bg-gray-900" : ""}
       ${user.role === "admin" ? "bg-blue-100 dark:bg-blue-600" : ""}
       ${user.role === "superAdmin" ? "bg-green-100 dark:bg-green-600" : ""}
     `}

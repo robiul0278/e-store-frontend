@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { Search, Filter, Loader, } from "lucide-react";
-import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/api/api";
+import { useDeleteProductMutation, useGetAllProductsQuery, useUpdateProductStatusMutation } from "@/redux/api/api";
 import { TGenericErrorResponse } from "@/types/types";
 import { toast } from "react-toastify";
 import Pagination from "@/components/Pagination";
 import ProductTable from "@/components/dashboard/ProductTable";
 import Swal from 'sweetalert2'
+import TableSkeleton from "@/components/TableSkeleton";
 
 export default function AllProductPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,15 +23,10 @@ export default function AllProductPage() {
     searchTerm: searchTerm,
   };
   const [DeleteProduct] = useDeleteProductMutation();
+  const [UpdateStatus] = useUpdateProductStatusMutation()
   const { data, isLoading } = useGetAllProductsQuery(params);
 
-  if (isLoading)
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-2 text-muted-foreground">
-        <Loader className="animate-spin h-5 w-5" />
-        <p className="text-sm">Product is loading...</p>
-      </div>
-    );
+  if (isLoading) return <TableSkeleton/> 
 
   const tableData = data?.data.result;
   const categories = data?.data.categories as string[] | undefined;
@@ -77,6 +73,62 @@ export default function AllProductPage() {
     });
   };
 
+
+    const handleUpdateStock = (id: string, inStock: boolean) => {
+      const userData = { id, inStock }
+  
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, change it!"
+      }).then(async (result) => {  // <-- async here
+        if (result.isConfirmed) {
+          try {
+            const res = await UpdateStatus(userData).unwrap();
+            if (res?.data.modifiedCount === 1) {
+              toast.success(`${res.message}`);
+            } else {
+              toast.error(`${res.message}`);
+            }
+          } catch (err: unknown) {
+            const error = err as { data: TGenericErrorResponse };
+            toast.error(error?.data?.message || "Update failed.");
+          }
+        }
+      });
+    };
+    const handleUpdateStatus = (id: string, status: string) => {
+      const userData = { id, status }
+  
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, change it!"
+      }).then(async (result) => {  // <-- async here
+        if (result.isConfirmed) {
+          try {
+            const res = await UpdateStatus(userData).unwrap();
+            console.log(res);
+            if (res?.data.modifiedCount === 1) {
+              toast.success(`${res.message}`);
+            } else {
+              toast.error(`${res.message}`);
+            }
+          } catch (err: unknown) {
+            const error = err as { data: TGenericErrorResponse };
+            toast.error(error?.data?.message || "Update failed.");
+          }
+        }
+      });
+    };
 
   return (
     <div className="space-y-6">
@@ -146,6 +198,8 @@ export default function AllProductPage() {
           <ProductTable
             products={tableData}
             onDelete={handleDelete}
+            onStockUpdate={handleUpdateStock}
+            onStatusUpdate={handleUpdateStatus}
           />
           {/* Pagination */}
           <div className="flex items-center justify-between">

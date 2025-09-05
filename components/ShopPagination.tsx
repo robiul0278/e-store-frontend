@@ -89,7 +89,7 @@ export default function Pagination({
             className={cn(
               "w-9 h-9 rounded-md border text-sm transition-colors",
               p === currentPage
-                ? "bg-yellow-600 text-white border-yellow-600"
+                ? "bg-yellow-600 text-white border-amber-600"
                 : "hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer border-gray-200"
             )}
             onClick={() => handlePagination(p)}

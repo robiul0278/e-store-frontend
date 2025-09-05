@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartModal from "@/components/CartModal";
+import RelatedProducts from "@/components/RelatedProducts";
+import ProductViewSkeleton from "@/components/ProductViewSkeleton";
 
 interface ProductData {
   _id: string;
@@ -34,7 +36,7 @@ export default function ProductDetails() {
 
   const { data: productResponse, isLoading, isError } = useGetSingleProductQuery(slug || "");
   const product: ProductData | undefined = productResponse?.data;
-  if (isLoading) return <p className="text-center py-20">Loading...</p>;
+  if (isLoading) return <ProductViewSkeleton/>;
   if (isError || !product) return <p className="text-center py-20">Product not found</p>;
   const { _id, name, photos = [], description, price, discount, discountPrice, inStock, categories = [] } = product;
 
@@ -137,6 +139,7 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+      <RelatedProducts category={categories[0]}/>
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}

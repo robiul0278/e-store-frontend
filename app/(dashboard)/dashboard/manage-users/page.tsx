@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Pagination from "@/components/Pagination";
 import Swal from 'sweetalert2'
 import UserTable from "@/components/dashboard/UserTable";
+import TableSkeleton from "@/components/TableSkeleton";
 
 export default function AllUsersPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,13 +26,7 @@ export default function AllUsersPage() {
   const [UpdateRole] = useUpdateRoleMutation();
   const { data, isLoading } = useGetAllUsersQuery(params);
 
-  if (isLoading)
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-2 text-muted-foreground">
-        <Loader className="animate-spin h-5 w-5" />
-        <p className="text-sm">Users is loading...</p>
-      </div>
-    );
+ if (isLoading) return <TableSkeleton/> 
 
   const tableData = data?.data.result;
 

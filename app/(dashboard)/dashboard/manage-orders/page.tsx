@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Pagination from "@/components/Pagination";
 import Swal from 'sweetalert2'
 import OrderTable from "@/components/dashboard/OrderTable";
+import TableSkeleton from "@/components/TableSkeleton";
 
 export default function AllUsersPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,13 +32,7 @@ export default function AllUsersPage() {
   const [UpdateStatus] = useUpdateOrderStatusMutation();
   const { data, isLoading } = useGetAllOrdersQuery(params);
 
-  if (isLoading)
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-2 text-muted-foreground">
-        <Loader className="animate-spin h-5 w-5" />
-        <p className="text-sm">Orders is loading...</p>
-      </div>
-    );
+ if (isLoading) return <TableSkeleton/> 
 
   const tableData = data?.data.result;
 

@@ -7,9 +7,11 @@ import { TProduct } from "@/types/types";
 type ProductTableProps = {
     products?: TProduct[];
     onDelete: (id: string) => void;
+    onStockUpdate: (id: string, inStock: boolean) => void;
+    onStatusUpdate: (id: string, status: string) => void;
 };
 
-export default function ProductTable({ products, onDelete }: ProductTableProps) {
+export default function ProductTable({ products, onDelete, onStockUpdate, onStatusUpdate }: ProductTableProps) {
     return (
         <div className="rounded-md border overflow-x-auto">
             <table className="w-full text-sm">
@@ -20,8 +22,8 @@ export default function ProductTable({ products, onDelete }: ProductTableProps) 
                         <th className="text-left p-3 font-semibold text-foreground">Discount</th>
                         <th className="text-left p-3 font-semibold text-foreground">Discount Price</th>
                         <th className="text-left p-3 font-semibold text-foreground">In Stock</th>
-                        <th className="text-right p-3 font-semibold text-foreground">Status</th>
-                        <th className="text-right p-3 font-semibold text-foreground">Action</th>
+                        <th className="text-left p-3 font-semibold text-foreground">Status</th>
+                        <th className="text-center p-3 font-semibold text-foreground">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,16 +53,30 @@ export default function ProductTable({ products, onDelete }: ProductTableProps) 
                                 </div>
                             </td>
                             <td className="p-3 align-top">
-                                <div className="flex items-center text-muted-foreground">
-                                    {product.inStock ? (
-                                        <span className="text-green-600 font-medium">In Stock</span>
-                                    ) : (
-                                        <span className="text-red-600 font-medium">Out of Stock</span>
-                                    )}
-                                </div>
+                                <select
+                                    value={product.inStock ? "true" : "false"}  // boolean কে string এ convert
+                                    onChange={(e) => {
+                                        const booleanValue = e.target.value === "true"; // string → boolean
+                                        onStockUpdate(product._id, booleanValue);
+                                    }}
+                                    className={`appearance-none w-40 h-9 pl-9 pr-9 rounded-md border text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+      ${product.inStock ? "bg-gray-100 dark:bg-gray-900" : "bg-blue-100 dark:bg-amber-600"}`}
+                                >
+                                    <option value="true">In Stock</option>
+                                    <option value="false">Out of Stock</option>
+                                </select>
                             </td>
-                            <td className="p-3 flex justify-end  align-top">
-                                <div className="flex items-center text-muted-foreground">{product.status}</div>
+                            <td className="p-3 align-top">
+                                <select
+                                    value={product.status}
+                                    onChange={(e) => onStatusUpdate(product._id, e.target.value)}
+                                    className={`appearance-none w-40 h-9 pl-9 pr-9 rounded-md border text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+      ${product.status === "active" ? "bg-gray-100 dark:bg-gray-900" : ""}
+      ${product.status === "inactive" ? "bg-blue-100 dark:bg-amber-600" : ""}`}
+                                >
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
                             </td>
                             <td className="p-3 align-top">
                                 <div className="flex justify-end gap-2">

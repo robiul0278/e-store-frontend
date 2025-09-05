@@ -43,7 +43,7 @@ export default function Pagination({ setPageAction, page, totalPage }: Paginatio
             key={number}
             onClick={() => setPageAction(number)}
             className={`px-3 py-1 rounded-md border ${isActive
-                ? "bg-yellow-600 text-white border-yellow-600"
+                ? "bg-amber-600 text-white border-amber-600"
                 : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
           >

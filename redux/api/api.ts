@@ -67,6 +67,25 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["products"]
     }),
+    updateProductStatus: builder.mutation({
+      query: (Status) => {
+        return {
+          url: `/products/update-status/${Status.id}`,
+          method: "PATCH",
+          body: Status
+        }
+      },
+      invalidatesTags: ["products"]
+    }),
+    dashboardAnalytics: builder.query({
+      query: () => {
+        return {
+          url: `/products/analytics`,
+          method: "GET",
+        }
+      },
+      providesTags: ["products","auth","orders"]
+    }),
     //Manage Auth route ✅
     registerUser: builder.mutation({
       query: (formData) => {
@@ -195,6 +214,8 @@ export const {
   useUpdateProductMutation,
   useGetSingleProductQuery,
   useDeleteProductMutation,
+  useUpdateProductStatusMutation,
+  useDashboardAnalyticsQuery,
   //auth route
   useLoginUserMutation,
   useRegisterUserMutation,
