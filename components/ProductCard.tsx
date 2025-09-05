@@ -33,7 +33,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState<number>(1);
-    const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const cartItems = useSelector(selectCartItems);
   const isInCart = cartItems.some(item => item.id === product?._id);
 
@@ -57,10 +57,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link href={`/product/${product.slug}`} className='cursor-pointer'>
         <div className="relative h-48 w-full overflow-hidden group">
           <Image
-            src={product.photos[0]}   // show only first photo
+            src={product.photos[0]}
             alt={product.name}
             fill
-            className="w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105"
+            className="w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105 object-contain"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
@@ -101,7 +101,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="p-2">
         {isInCart ?
           (<button
-          onClick={() => setIsCartOpen(true)}
+            onClick={() => setIsCartOpen(true)}
             className="w-full flex items-center justify-center gap-2 px-4 py-1 border font-semibold rounded-lg hover:shadow transition-all duration-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900"
           >
             <LucideShoppingCart className="w-5 h-5" />
@@ -117,10 +117,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>)}
 
       </div>
-            <CartModal
-              isOpen={isCartOpen}
-              onClose={() => setIsCartOpen(false)}
-            />
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+      />
     </div>
   );
 }

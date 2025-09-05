@@ -8,7 +8,7 @@ type TParams = {
   fields?: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+const BASE_URL = 'https://e-store-backend-rho.vercel.app/api/v1'
 
 export async function getAllProducts({params}: {params?:TParams}) {
   const queryString = new URLSearchParams(params).toString();
