@@ -60,7 +60,7 @@ export default function ThankYouMessage() {
           className="flex justify-center"
         >
           <Link href="/" passHref>
-            <button className="mt-6 flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition">
+            <button className="mt-6 flex items-center gap-2  px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition cursor-pointer bg-amber-600 text-white">
               <Home className="h-5 w-5" />
               Back to Shop
             </button>

@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 interface CheckoutFormProps {
   onOrderComplete: () => void;
 }
-const orderId = Math.floor(100000 + Math.random() * 900000).toString();
+
 
 export default function CheckoutForm({ onOrderComplete}: CheckoutFormProps) {
   const [CreateOrder] = useCreateOrdersMutation()
@@ -31,6 +31,7 @@ export default function CheckoutForm({ onOrderComplete}: CheckoutFormProps) {
   const paymentMethod = watch('paymentMethod');
 
   const handleOrderSubmit = async (data: TOrder) => {
+    const orderId = Math.floor(100000 + Math.random() * 900000).toString();
     const orderData = {
       user: user?._id,
       products,
@@ -40,7 +41,6 @@ export default function CheckoutForm({ onOrderComplete}: CheckoutFormProps) {
       paymentMethod: data.paymentMethod,
       orderId,
     }
-    console.log(orderData);
     try {
       const response = await CreateOrder(orderData).unwrap();
       toast.success(response.message);

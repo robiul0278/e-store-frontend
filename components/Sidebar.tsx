@@ -34,7 +34,7 @@ const sidebarNavItems = [
   },
   {
     title: 'Manage Orders',
-    href: '/dashboard/orders',
+    href: '/dashboard/manage-orders',
     icon: ListOrderedIcon,
   },
   {

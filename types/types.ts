@@ -65,3 +65,32 @@ export type TOrder = {
   phone: string;
   paymentMethod: string;
 }
+
+
+export type TOrderProduct = {
+  product: TProduct;
+  quantity: number;
+  price: number;
+};
+
+type User = {
+  name: string;
+  email: string;
+  password: string;
+  photo: string;
+}
+
+export type TOrderTable = {
+  _id: string;
+  user: User;
+  products: TOrderProduct[];
+  totalAmount: number;
+  status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled";
+  shippingAddress: string;
+  phone: string;
+  paymentMethod?: string;
+  paymentStatus?: "pending" | "paid" | "failed";
+  orderId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

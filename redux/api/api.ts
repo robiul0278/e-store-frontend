@@ -165,6 +165,25 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["orders"]
     }),
+    deleteOrder: builder.mutation({
+      query: (userId) => {
+        return {
+          url: `/orders/delete/${userId}`,
+          method: "DELETE",
+        }
+      },
+      invalidatesTags: ["orders"]
+    }),
+    updateOrderStatus: builder.mutation({
+      query: (status) => {
+        return {
+          url: `/orders/update/${status.id}`,
+          method: "PATCH",
+          body: status
+        }
+      },
+      invalidatesTags: ["orders"]
+    }),
   }),
 });
 
@@ -187,4 +206,6 @@ export const {
   //Order route
   useGetAllOrdersQuery,
   useCreateOrdersMutation,
+  useDeleteOrderMutation,
+  useUpdateOrderStatusMutation
 } = baseApi;
