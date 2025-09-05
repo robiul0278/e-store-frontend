@@ -12,6 +12,7 @@ export default async function ShopPage({ searchParams }: {
     category?: string;
     query?: string;
     page?: string;
+    limit: string;
   }>;
 }) {
   const resolvedParams = await searchParams;
@@ -22,6 +23,7 @@ export default async function ShopPage({ searchParams }: {
     ...(category ? { categories: category } : {}),
     ...(query ? { searchTerm: query } : {}),
     page: currentPage.toString(),
+    limit: '12'
   };
 
   const { result, meta, categories } = await getAllProducts({ params });

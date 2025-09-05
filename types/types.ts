@@ -30,7 +30,7 @@ export type ProductFormType = {
   price: number;
   discount: number;
   categories: string[];
-  photos:  File[];
+  photos: File[];
 };
 
 
@@ -52,10 +52,16 @@ export type TProduct = {
 };
 
 export type TUsers = {
-  _id:string;
-    name: string;
-    email: string;
-    password: string;
-    photo: string;
-    role: string;
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  photo: string;
+  role: string;
+}
+
+export type TOrder = {
+  shippingAddress: string;
+  phone: string;
+  paymentMethod: string;
 }

@@ -7,11 +7,8 @@ import { clearCart } from '@/redux/features/cartSlice';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
-interface ThankYouMessageProps {
-  orderId: string;
-}
 
-export default function ThankYouMessage({ orderId }: ThankYouMessageProps) {
+export default function ThankYouMessage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,17 +41,6 @@ export default function ThankYouMessage({ orderId }: ThankYouMessageProps) {
             Your order has been placed successfully.
           </p>
         </div>
-
-        {/* Order Details */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="bg-secondary/20 rounded-lg p-4 mt-6 text-center"
-        >
-          <p className="text-sm text-muted-foreground mb-1">Order Reference</p>
-          <p className="text-xl font-mono tracking-wider">{orderId}</p>
-        </motion.div>
 
         {/* Extra Info */}
         <motion.p

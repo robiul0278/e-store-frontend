@@ -1,116 +1,135 @@
 'use client';
 
-import { useState } from 'react';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, CreditCard, CheckCircle2, DollarSign,  } from 'lucide-react';
+import { Loader2, CheckCircle2 } from 'lucide-react';
 import { toast } from 'react-toastify';
-
-const formSchema = z.object({
-  fullName: z.string().min(2, { message: 'Full name is required' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  notes: z.string().optional(),
-  paymentMethod: z.union([
-    z.literal('card'),
-    z.literal('paypal'),
-    z.literal('demo'),
-  ]),
-});
-
-
-type CheckoutFormValues = z.infer<typeof formSchema>;
+import { TGenericErrorResponse, TOrder } from '@/types/types';
+import { useCreateOrdersMutation } from '@/redux/api/api';
+import { useAppSelector } from '@/redux/hooks';
+import { selectOrderData, selectSubtotal } from '@/redux/features/cartSlice';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 interface CheckoutFormProps {
   onOrderComplete: () => void;
 }
+const orderId = Math.floor(100000 + Math.random() * 900000).toString();
 
-export default function CheckoutForm({ onOrderComplete }: CheckoutFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function CheckoutForm({ onOrderComplete}: CheckoutFormProps) {
+  const [CreateOrder] = useCreateOrdersMutation()
+  const { products } = useAppSelector(selectOrderData);
+  const subtotal = useSelector(selectSubtotal);
+  const { user } = useSelector((state: RootState) => state.auth);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<CheckoutFormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { fullName: '', email: '', notes: '', paymentMethod: 'demo' },
+  const { register, setError, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm<TOrder>({
+    defaultValues: {
+      shippingAddress: '',
+      phone: '',
+      paymentMethod: 'demo'
+    },
   });
-
   const paymentMethod = watch('paymentMethod');
 
-  const handleFormSubmit = (data: CheckoutFormValues) => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success('Order placed successfully!');
+  const handleOrderSubmit = async (data: TOrder) => {
+    const orderData = {
+      user: user?._id,
+      products,
+      totalAmount: subtotal,
+      shippingAddress: data.shippingAddress,
+      phone: data.phone,
+      paymentMethod: data.paymentMethod,
+      orderId,
+    }
+    console.log(orderData);
+    try {
+      const response = await CreateOrder(orderData).unwrap();
+      toast.success(response.message);
       onOrderComplete();
-    }, 1500);
+    } catch (error: unknown) {
+      const err = error as { data: TGenericErrorResponse };
+      console.log(err);
+      if (err?.data?.errorSources && Array.isArray(err.data.errorSources)) {
+        err.data.errorSources.forEach(({ path, message }) => {
+          setError(path as keyof TOrder, {
+            type: "server",
+            message,
+          });
+        });
+      } else {
+        toast.error(err?.data?.message);
+      }
+    }
   };
 
   return (
-    <div className=" dark:bg-gray-800 shadow-xl rounded-2xl p-6 md:p-8 space-y-6">
+    <div className="dark:bg-gray-800 shadow-xl rounded-2xl p-6 md:p-8 space-y-6">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Checkout</h2>
 
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
-        {/* Full Name */}
+      <form onSubmit={handleSubmit(handleOrderSubmit)} className="space-y-5">
+        {/* Shipping Address */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Full Name</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+            Shipping Address
+          </label>
           <input
             type="text"
-            placeholder="John Doe"
-            {...register('fullName')}
-            className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-              errors.fullName ? 'border-red-500' : 'border-gray-300'
-            }`}
+            placeholder="Enter your address"
+            {...register('shippingAddress')}
+            className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${errors.shippingAddress ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
-          {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
+          {errors.shippingAddress && (
+            <p className="text-red-500 text-sm mt-1">{errors.shippingAddress.message}</p>
+          )}
         </div>
 
-        {/* Email */}
+        {/* Phone */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Email Address</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+            Phone Number
+          </label>
           <input
-            type="email"
-            placeholder="john.doe@example.com"
-            {...register('email')}
-            className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
-            }`}
+            type="text"
+            placeholder="e.g. 017XXXXXXXX"
+            {...register('phone')}
+            className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${errors.phone ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-        </div>
-
-        {/* Notes */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Special Instructions</label>
-          <textarea
-            placeholder="Any special requests?"
-            {...register('notes')}
-            className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition border-gray-300"
-          />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+          )}
         </div>
 
         {/* Payment Method */}
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-200">Payment Method</label>
-          <div className="">
-     
-
-            <label
-              className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer transition-all hover:shadow-md ${
-                paymentMethod === 'demo' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 dark:border-gray-600'
+          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-200">
+            Payment Method
+          </label>
+          <label
+            className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer transition-all hover:shadow-md ${paymentMethod === 'demo'
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-300 dark:border-gray-600'
               }`}
-            >
-              <input type="radio" value="demo" {...register('paymentMethod')} className="cursor-pointer" />
-              <CheckCircle2 className="w-5 h-5 text-green-500" />
-              Demo Checkout
-            </label>
-          </div>
-          {errors.paymentMethod && <p className="text-red-500 text-sm mt-1">{errors.paymentMethod.message}</p>}
+          >
+            <input
+              type="radio"
+              value="demo"
+              {...register('paymentMethod')}
+              className="cursor-pointer"
+            />
+            <CheckCircle2 className="w-5 h-5 text-green-500" />
+            Demo Checkout
+          </label>
+          {errors.paymentMethod && (
+            <p className="text-red-500 text-sm mt-1">{errors.paymentMethod.message}</p>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 px-6 py-2 bg-yellow-600 text-white font-semibold rounded-xl hover:bg-yellow-700 transition disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Place Order'}
         </button>

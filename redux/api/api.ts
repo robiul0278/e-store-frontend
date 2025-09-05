@@ -15,7 +15,7 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ["products", "auth", "bookmark", "notice"],
+  tagTypes: ["products", "auth", "orders"],
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: (params) => {
@@ -67,7 +67,7 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["products"]
     }),
-    //Auth route
+    //Manage Auth route ✅
     registerUser: builder.mutation({
       query: (formData) => {
         console.log(formData);
@@ -144,54 +144,26 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["auth"]
     }),
-    getBookmark: builder.query({
-      query: (userId) => {
-        // console.log("API",userId);
+    // Manage Order Route ✅
+    getAllOrders: builder.query({
+      query: (params) => {
         return {
-          url: `/user/bookmark/${userId}`,
+          url: `/orders`,
           method: "GET",
+          params: params
         }
       },
-      providesTags: ["bookmark"]
+      providesTags: ["orders"]
     }),
-    addBookmark: builder.mutation({
-      query: (data) => {
-        // console.log(data);
+    createOrders: builder.mutation({
+      query: (orderData) => {
         return {
-          url: `/user/bookmark/add/${data.userId}`,
-          method: "PATCH",
-          body: { jobId: data.jobId }
-        }
-      },
-      invalidatesTags: ["bookmark"]
-    }),
-    removeBookmark: builder.mutation({
-      query: (data) => {
-        // console.log(data);
-        return {
-          url: `/user/bookmark/remove/${data.userId}`,
-          method: "PATCH",
-          body: { jobId: data.jobId }
-        }
-      },
-      invalidatesTags: ["bookmark"]
-    }),
-    // Notice
-    addNotice: builder.mutation({
-      query: (data) => {
-        // console.log(data);
-        return {
-          url: "/notice/create-notice",
+          url: `/orders/create`,
           method: "POST",
-          body: data
+          body: orderData
         }
       },
-      invalidatesTags: ["notice"]
-    }),
-    allNotice: builder.query({
-      query: () => "/notice",
-      providesTags: ["notice"],
-      keepUnusedDataFor: 300,       // ৫ মিনিট ক্যাশ রাখবে
+      invalidatesTags: ["orders"]
     }),
   }),
 });
@@ -212,12 +184,7 @@ export const {
   useGetAllUsersQuery,
   useDeleteUserMutation,
   useUpdateRoleMutation,
-  //bookmark route
-  useGetBookmarkQuery,
-  useAddBookmarkMutation,
-  useRemoveBookmarkMutation,
-  //Notice
-  useAddNoticeMutation,
-  useAllNoticeQuery,
-  //Dashboard analytics
+  //Order route
+  useGetAllOrdersQuery,
+  useCreateOrdersMutation,
 } = baseApi;

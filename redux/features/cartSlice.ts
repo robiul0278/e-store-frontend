@@ -56,4 +56,16 @@ export const selectTotal = (state: { cart: CartState }) => {
   return subtotal + state.cart.shipping;
 };
 
+
+// ✅ orderData creator
+export const selectOrderData = (state: { cart: CartState }) => {
+  return {
+    products: state.cart.items.map((item) => ({
+      product: item.id, 
+      quantity: item.quantity,
+      price: item.price,
+    })),
+  };
+};
+
 export default cartSlice.reducer;

@@ -10,18 +10,14 @@ import CheckoutForm from '../../../components/CheckoutForm';
 
 export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState('');
   const cartItems = useSelector(selectCartItems);
 
   const handleOrderComplete = () => {
-    // Generate a random order ID
-    const randomOrderId = Math.floor(100000 + Math.random() * 900000).toString();
-    setOrderId(randomOrderId);
     setOrderComplete(true);
   };
 
   if (orderComplete) {
-    return <ThankYouMessage orderId={orderId} />;
+    return <ThankYouMessage/>;
   }
 
   return (
